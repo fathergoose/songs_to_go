@@ -1,7 +1,41 @@
 #!/usr/bin/env ruby
 require 'highline'
+require 'fileutils'
+require './lib/copier.rb'
 
 
 cli = HighLine.new
+
+if ARGV.length > 1
+  copier = Copier.new(ARGV[0], ARGV[1])
+else
+  src = cli.ask 'From where would you like to copy?'
+  dst = cli.ask 'To where would you like these files copied?'
+  copier = Copier.new(src, dst)
+end
+
+puts copier.destination_path
+puts copier.source_path
+
+copier.sources.each do |sd|
+  Dir.chdir(copier.source_path) do
+    copy_this = cli.ask "Copy contents of #{sd}? y/n--default=n"
+    if copy_this == 'y'
+      puts "DO ASYNC COPY"
+      puts "^^^^^^^^^^^^cop.dest_path"
+      puts copier.destination_path
+      puts "$$$$$$$$$$$$$$$$$$$$$$$$"
+      puts "^^^^^^^^^^^^ sd"
+      puts sd
+      puts "$$$$$$$$$$$"
+      FileUtils.cp_r(sd, copier.destination_path)
+    end
+  end
+end
+
+
+
+
+
 answer = cli.ask "What do you think?"
 puts "You have answered #{answer} \n cool?"
