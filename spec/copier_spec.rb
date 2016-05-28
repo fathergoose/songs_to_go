@@ -5,16 +5,27 @@ RSpec.describe Copier do
     it "takes two argmuents" do 
       expect(Copier).to respond_to(:new).with(2).arguments
     end
-    it "assigns the arguments as directories" do
+    it "assigns the arguments as pathname" do
       copier = Copier.new('./', '../')
-      src_dir = copier.source_dir
-      dst_dir = copier.destination_dir
-      expect(src_dir).to be_a(Dir) 
-      expect(dst_dir).to be_a(Dir)
+      src_path = copier.source_path
+      dst_path = copier.destination_path
+      expect(src_path).to be_a(Pathname) 
+      expect(src_path).to be_a(Pathname)
     end
   end
 
-  describe ".list" do
+  describe "#sources" do
+    it "returns an array of directories" do
+      copier = Copier.new('./', './spec')
+      source_dirs = copier.sources
+      expect(source_dirs).to be_an(Array)
+      expect(source_dirs).to include('spec')
+      expect(source_dirs).not_to include('Gemfile')
+      expect(source_dirs).to all( be_a(String) )
+      ##expect(source_dirs).to all( be_a(Dir) )
+      # Doesn't make sense, they aren't, but strings
+      # But that string test makes no sense either :/
+    end
   end
 
 end
