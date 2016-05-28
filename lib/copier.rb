@@ -9,8 +9,10 @@ class Copier
   end
 
   def sources
-    Dir.glob('*').select do |f|
-      File.directory?(f)
+    Dir.chdir(@source_path) do
+      Dir.glob('*').select do |f|
+        File.directory?(f)
+      end
     end
   end
 

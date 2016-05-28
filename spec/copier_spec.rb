@@ -16,11 +16,11 @@ RSpec.describe Copier do
 
   describe "#sources" do
     it "returns an array of directories" do
-      copier = Copier.new('./', './spec')
+      copier = Copier.new('./spec', './')
       source_dirs = copier.sources
       expect(source_dirs).to be_an(Array)
-      expect(source_dirs).to include('spec')
-      expect(source_dirs).not_to include('Gemfile')
+      expect(source_dirs).to include('test_dir')
+      expect(source_dirs).not_to include('spec_helper.rb')
       expect(source_dirs).to all( be_a(String) )
       ##expect(source_dirs).to all( be_a(Dir) )
       # Doesn't make sense, they aren't, but strings
