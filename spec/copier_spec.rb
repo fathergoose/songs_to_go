@@ -22,9 +22,6 @@ RSpec.describe Copier do
       expect(source_dirs).to include('test_dir')
       expect(source_dirs).not_to include('spec_helper.rb')
       expect(source_dirs).to all( be_a(String) )
-      ##expect(source_dirs).to all( be_a(Dir) )
-      # Doesn't make sense, they aren't, but strings
-      # But that string test makes no sense either :/
     end
   end
 
